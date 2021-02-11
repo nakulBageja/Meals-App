@@ -14,6 +14,10 @@ enableScreens()
 
 ```
 
+### ADDING BUTTONS IN YOUR HEADER
+
+npm install --save react-navigation-header-buttons
+
 ### NEED REACT NAVIGATION ALWAYS
 
 import { createAppContainer } from "react-navigation";
