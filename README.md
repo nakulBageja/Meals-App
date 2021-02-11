@@ -1,5 +1,19 @@
 ## NAVIGATION
 
+Use this in every app to improve performance
+
+npm install --save react-native-screens
+
+in app.js
+
+```
+
+import {enableScreens} from "react-native-screens"
+
+enableScreens()
+
+```
+
 ### NEED REACT NAVIGATION ALWAYS
 
 import { createAppContainer } from "react-navigation";
@@ -16,11 +30,7 @@ before you start using it (with v3 and lower, it was part of react-navigation it
 Also add this import in the file where you are using createStackNavigator:
 
 import { createStackNavigator } from 'react-navigation-stack';
-Same for TabsNavigator (used a little bit later in this module):
 
-npm install --save react-navigation-tabs
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-And also for DrawerNavigator (also used later in this module):
+## NAVIGATION OPTIONS
 
-npm install --save react-navigation-drawer
-import { createDrawerNavigator } from 'react-navigation-drawer';
+CategoriesScreen.navigationOptions = header("MEALS CATEGORIES");
