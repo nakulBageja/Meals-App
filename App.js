@@ -4,6 +4,11 @@ import { useFonts } from "expo-font";
 import MealsNavigator from "./navigation/MealsNavigation";
 import { enableScreens } from "react-native-screens";
 
+//Remove yellow warning
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
+LogBox.ignoreAllLogs(); //Ignore all log notifications
+
 enableScreens();
 
 export default function App() {

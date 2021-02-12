@@ -1,3 +1,5 @@
+//Component used to display a meal item
+
 import React from "react";
 import {
   View,

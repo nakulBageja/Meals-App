@@ -26,6 +26,8 @@ import { createAppContainer } from "react-navigation";
 
 ### DIFFERENT WAYS OF NAVIGATION/NAVIGATORS
 
+#### STACK
+
 So when we use the StackNavigator (= next lecture), run
 
 npm install --save react-navigation-stack
@@ -34,6 +36,11 @@ before you start using it (with v3 and lower, it was part of react-navigation it
 Also add this import in the file where you are using createStackNavigator:
 
 import { createStackNavigator } from 'react-navigation-stack';
+
+#### TABS (v4.0)
+
+npm install react-navigation-tabs
+import { createBottomTabNavigator } from '@react-navigation-bottom-tabs';
 
 ## NAVIGATION OPTIONS
 
