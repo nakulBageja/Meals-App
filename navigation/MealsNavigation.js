@@ -1,14 +1,16 @@
 import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import CategoriesScreen from "../screens/CategoriesScreen";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import CategoriesScreen from "../screens/CategoriesScreen";
+import { Ionicons } from "@expo/vector-icons";
+
 import CategoryMealScreen from "../screens/CategoryMealScreen";
 import MealDetailScreen from "../screens/MealDetailScreen";
 import FavoriteMealsScreen from "../screens/FavoriteMealScreen";
 import Color from "../constants/Colors";
-import { Ionicons } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
+import FitlerScreen from "../screens/FiltersScreen";
 
 const defaultNavOption = {
   headerStyle: {
@@ -79,9 +81,24 @@ const MealsTabNavigator = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: Colors.primary,
+      activeTintColor: Color.primary,
     },
   }
 );
+//Fitlers stack navigator
+const FitlerNavigator = createStackNavigator(
+  {
+    Filter: FitlerScreen,
+  },
+  {
+    defaultNavigationOptions: defaultNavOption,
+  }
+);
 
-export default createAppContainer(MealsTabNavigator);
+//Side drawer
+const sideDrawerNavigator = createDrawerNavigator({
+  MealsFavs: MealsTabNavigator,
+  Filter: FitlerNavigator,
+});
+
+export default createAppContainer(sideDrawerNavigator);

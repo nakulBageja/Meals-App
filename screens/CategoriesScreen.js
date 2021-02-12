@@ -1,10 +1,11 @@
 //Home screen. Displaying all the categories
 
 import React from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { FlatList } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { CategoriesData } from "../data/CategoriesData";
 import CategoriesGrid from "../Components/CategoriesGrid";
-
+import HeaderButton from "../Components/HeaderButton";
 const CategoriesScreen = (props) => {
   const displayGrid = (itemData) => {
     return (
@@ -30,15 +31,19 @@ const CategoriesScreen = (props) => {
   );
 };
 
-//ADDING CUSTOM HEADER
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Meal Categories",
+//ADDING CUSTOM HEADER and menu drawer
+CategoriesScreen.navigationOptions = (navData) => {
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => navData.navigation.toggleDrawer()}
+        />
+      </HeaderButtons>
+    ),
+  };
 };
-const styles = StyleSheet.create({
-  grid: {
-    flex: 1,
-    margin: 15,
-    height: 150,
-  },
-});
 export default CategoriesScreen;

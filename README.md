@@ -42,6 +42,11 @@ import { createStackNavigator } from 'react-navigation-stack';
 npm install react-navigation-tabs
 import { createBottomTabNavigator } from '@react-navigation-bottom-tabs';
 
+#### DRAWER (v4.0)
+
+npm install react-navigation-drawer
+import { createDrawerNavigator } from 'react-navigation-drawer';
+
 ## NAVIGATION OPTIONS
 
 CategoriesScreen.navigationOptions = header("MEALS CATEGORIES");
