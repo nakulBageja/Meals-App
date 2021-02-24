@@ -1,13 +1,15 @@
 //Second screen. Displaying recipes of that particular cuisine
 import React from "react";
 import MealList from "../Components/MealList";
-import { CategoriesData, MEALS } from "../data/CategoriesData";
-
+import { CategoriesData } from "../data/CategoriesData";
+import { useSelector } from "react-redux"; //useSelector is used to call the redux store and fetch req data
 const CategoryMealScreen = ({ navigation }) => {
+  //get all meals
+  const availableMeals = useSelector((state) => state.mealsReducer.MEALS);
   //Fetch the category id sent through params
   const catID = navigation.getParam("categoryID");
   //Get all the meals which contain the params Category id
-  const displayMeals = MEALS.filter(
+  const displayMeals = availableMeals.filter(
     (meal) => meal.categoryIds.indexOf(catID) >= 0
   );
 

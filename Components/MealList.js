@@ -11,7 +11,10 @@ const MealList = ({ displayMeals, navigation }) => {
         onSelectMeal={() => {
           navigation.navigate({
             routeName: "MealDetail",
-            params: { mealID: itemData.item.id },
+            params: {
+              mealID: itemData.item.id,
+              mealTitle: itemData.item.title,
+            },
           });
         }}
         image={itemData.item.imageUrl}

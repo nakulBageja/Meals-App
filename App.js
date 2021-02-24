@@ -4,12 +4,26 @@ import { useFonts } from "expo-font";
 import MealsNavigator from "./navigation/MealsNavigation";
 import { enableScreens } from "react-native-screens";
 
+//Redux
+import { createStore, combineReducers } from "redux";
+import mealsReducer from "./store/reducers/mealsReducer";
+import { Provider } from "react-redux";
+
 //Remove yellow warning
 import { LogBox } from "react-native";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
-enableScreens();
+enableScreens(); //improve performance
+
+//group all reducers
+const rootReducers = combineReducers({
+  mealsReducer: mealsReducer,
+});
+
+//create redux store
+
+const store = createStore(rootReducers);
 
 export default function App() {
   const [loaded] = useFonts({
@@ -18,7 +32,11 @@ export default function App() {
   });
 
   if (!loaded) return null;
-  return <MealsNavigator />;
+  return (
+    <Provider store={store}>
+      <MealsNavigator />
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({

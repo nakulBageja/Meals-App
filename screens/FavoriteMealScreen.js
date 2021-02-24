@@ -1,11 +1,11 @@
 import React from "react";
 import MealList from "../Components/MealList";
-import { MEALS } from "../data/CategoriesData";
+import { useSelector } from "react-redux"; //useSelector is used to call the redux store and fetch req data
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../Components/HeaderButton";
 const FavoriteMealsScreen = ({ navigation }) => {
   //Get all the meals which contain the params Category id
-  const favMeals = MEALS.filter((meal) => meal.id === "m1" || meal.id === "m3");
+  const favMeals = useSelector((state) => state.mealsReducer.FAV_MEAL);
   return <MealList displayMeals={favMeals} navigation={navigation} />;
 };
 
