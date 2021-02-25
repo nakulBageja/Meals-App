@@ -2,9 +2,12 @@
 
 import React from "react";
 import { FlatList } from "react-native";
+import { useSelector } from "react-redux";
 import MealItem from "../Components/MealItem";
 const MealList = ({ displayMeals, navigation }) => {
+  const currentFavorites = useSelector((state) => state.mealsReducer.FAV_MEAL); //fetch all fav
   const renderMeals = (itemData) => {
+    const isFav = currentFavorites.some((meal) => meal.id === itemData.item.id); //check if current
     return (
       <MealItem
         title={itemData.item.title}
@@ -14,6 +17,7 @@ const MealList = ({ displayMeals, navigation }) => {
             params: {
               mealID: itemData.item.id,
               mealTitle: itemData.item.title,
+              isFav,
             },
           });
         }}

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Text, View, Switch, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../Components/HeaderButton";
 import Colors from "../constants/Colors";
-
+import { useDispatch } from "react-redux";
+import { set_filers } from "../store/actions/mealsActions";
 const FilerSwitch = (props) => {
   return (
     <View style={styles.fitlerContainer}>
@@ -18,11 +19,25 @@ const FilerSwitch = (props) => {
   );
 };
 
-const FitlerScreen = (props) => {
+const FitlerScreen = ({ navigation }) => {
   const [isGlutenFree, setIsGlutenFree] = useState(false);
-  const [isSugarFree, setIsSugarFree] = useState(false);
-  const [isSaltFree, setIsSaltFree] = useState(false);
-  const [isSpiceFree, setIsSpiceFree] = useState(false);
+  const [isVegan, setisVegan] = useState(false);
+  const [isVegetarian, setisVegetarian] = useState(false);
+  const [isLactoseFree, setisLactoseFree] = useState(false);
+  const dispatchEvent = useDispatch();
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      isGlutenFree,
+      isVegan,
+      isVegetarian,
+      isLactoseFree,
+    };
+    dispatchEvent(set_filers(appliedFilters));
+  }, [isGlutenFree, isVegan, isVegetarian, isLactoseFree, dispatchEvent]);
+
+  useEffect(() => {
+    navigation.setParams({ saveFilters });
+  }, [saveFilters]);
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Available Filters</Text>
@@ -32,19 +47,19 @@ const FitlerScreen = (props) => {
         onChange={(newValue) => setIsGlutenFree(newValue)}
       />
       <FilerSwitch
-        label="Sugar-free"
-        state={isSugarFree}
-        onChange={(newValue) => setIsSugarFree(newValue)}
+        label="Vegan"
+        state={isVegan}
+        onChange={(newValue) => setisVegan(newValue)}
       />
       <FilerSwitch
-        label="Salt-free"
-        state={isSaltFree}
-        onChange={(newValue) => setIsSaltFree(newValue)}
+        label="Vegetarian"
+        state={isVegetarian}
+        onChange={(newValue) => setisVegetarian(newValue)}
       />
       <FilerSwitch
-        label="Spice-free"
-        state={isSpiceFree}
-        onChange={(newValue) => setIsSpiceFree(newValue)}
+        label="Lactose-free"
+        state={isLactoseFree}
+        onChange={(newValue) => setisLactoseFree(newValue)}
       />
     </View>
   );
@@ -52,6 +67,7 @@ const FitlerScreen = (props) => {
 
 //ADDING CUSTOM HEADER and menu drawer
 FitlerScreen.navigationOptions = (navData) => {
+  const saveFilters = navData.navigation.getParam("saveFilters");
   return {
     headerTitle: "Fitler Screen",
     headerLeft: () => (
@@ -61,6 +77,11 @@ FitlerScreen.navigationOptions = (navData) => {
           iconName="ios-menu"
           onPress={() => navData.navigation.toggleDrawer()}
         />
+      </HeaderButtons>
+    ),
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item title="Menu" iconName="ios-save" onPress={saveFilters} />
       </HeaderButtons>
     ),
   };

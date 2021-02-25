@@ -8,18 +8,24 @@ import { toggle_favorite } from "../store/actions/mealsActions";
 const MealDetailScreen = ({ navigation }) => {
   //get all meals
   const availableMeals = useSelector((state) => state.mealsReducer.MEALS);
+  const currentFavorites = useSelector((state) => state.mealsReducer.FAV_MEAL); //fetch all fav
   const mealID = navigation.getParam("mealID");
   const selectedMeal = availableMeals.find((meal) => meal.id === mealID);
-
+  const isFav = currentFavorites.some((meal) => meal.id === mealID); //check if current
+  const dispatch = useDispatch();
   //function to dispatch a new fav action
   const toggleFavHandler = useCallback(() => {
-    useDispatch(toggle_favorite(mealID));
-  }, [mealID, useDispatch]);
+    dispatch(toggle_favorite(mealID));
+  }, [mealID, dispatch]);
 
   //send new function reference to navigation, everytime a new meal is selected
   useEffect(() => {
     navigation.setParams({ toggleFav: toggleFavHandler });
   }, [toggleFavHandler]);
+
+  useEffect(() => {
+    navigation.setParams({ isFav });
+  }, [isFav]);
   return (
     <ScrollView>
       <Image source={{ uri: selectedMeal.imageUrl }} style={styles.image} />
@@ -44,11 +50,16 @@ MealDetailScreen.navigationOptions = (navigationData) => {
   //Fetch the category id sent through param
 
   const toggleFAVButton = navigationData.navigation.getParam("toggleFav");
+  const isFav = navigationData.navigation.getParam("isFav");
   return {
     headerTitle: navigationData.navigation.getParam("mealTitle"),
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Favorite" iconName="ios-star" onPress={toggleFAVButton} />
+        <Item
+          title="Favorite"
+          iconName={isFav ? "ios-star" : "ios-star-outline"}
+          onPress={toggleFAVButton}
+        />
       </HeaderButtons>
     ),
   };
